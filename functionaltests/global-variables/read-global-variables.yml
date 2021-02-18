@@ -1,6 +1,8 @@
 parameters:
-  - name: Object
-    type: object
+  - name: SimpleHostBotComposerDotNet
+    displayName: 'Run SimpleHostBotComposerDotNet'
+    type: boolean
+    default: true
 
 variables:
   - template: variables.yml
@@ -9,6 +11,7 @@ stages:
   - ${{ each bot in variables.bots }}:
     - stage: Deploy_${{ bot.id }}
       jobs:
-        - job: Deploy
-          steps:
-            - script: 'echo ${{ bot.name }}'
+        - ${{ if and(eq(bot.id, parameters.name), eq(parameters.value, true)) }}
+          - job: Deploy
+            steps:
+              - script: 'echo ${{ bot.name }}'
