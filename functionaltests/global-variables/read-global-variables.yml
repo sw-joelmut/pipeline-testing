@@ -1,6 +1,6 @@
 parameters:
-  - name: SimpleHostBotComposerDotNet
-    displayName: 'Run SimpleHostBotComposerDotNet'
+  - name: SimpleHostBotDotNet
+    displayName: 'Run SimpleHostBotDotNet'
     type: boolean
     default: true
 
