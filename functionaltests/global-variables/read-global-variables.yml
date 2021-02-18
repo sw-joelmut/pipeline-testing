@@ -5,7 +5,7 @@ parameters:
     default: true
 
 variables:
-  - template: variables.yml
+  - template: global-variables.yml
 
 stages:
   - ${{ each bot in variables.bots }}:
