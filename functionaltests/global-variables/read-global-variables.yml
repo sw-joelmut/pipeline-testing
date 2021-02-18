@@ -11,7 +11,7 @@ stages:
   - ${{ each bot in variables.bots }}:
     - stage: Deploy_${{ bot.id }}
       jobs:
-        - ${{ if and(eq(bot.id, parameters.name), eq(parameters.value, true)) }}
+        - ${{ if and(eq(bot.id, parameters.name), eq(parameters.value, true)) }}:
           - job: Deploy
             steps:
               - script: 'echo ${{ bot.name }}'
