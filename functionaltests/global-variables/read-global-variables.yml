@@ -1,0 +1,14 @@
+parameters:
+  - name: Object
+    type: object
+
+variables:
+  - template: variables.yml
+
+stages:
+  - ${{ each bot in variables.bots }}:
+    - stage: Deploy_${{ bot.id }}
+      jobs:
+        - job: Deploy
+          steps:
+            - script: 'echo ${{ bot.name }}'

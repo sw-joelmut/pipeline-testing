@@ -1,0 +1,38 @@
+variables:
+  scenarios:
+    - id: SingleTurn
+      consumers:
+        - SimpleHostBotComposerDotNet
+        - SimpleHostBotDotNet
+        - SimpleHostBotDotNet21
+        - SimpleHostBotJS
+        - SimpleHostBotPython
+      skills:
+        - EchoSkillBotComposerDotNet
+        - EchoSkillBotDotNet
+        - EchoSkillBotDotNet21
+        - EchoSkillBotDotNetV3
+        - EchoSkillBotJS
+        - EchoSkillBotJSV3
+        - EchoSkillBotPython
+    
+    - id: Waterfall
+      consumers:
+        - WaterfallHostBotDotNet
+      skills:
+        - WaterfallSkillBotDotNet
+
+  bots:
+    - id: SimpleHost
+      name: Simple Host Bot
+      category: DotNet
+      type: 'Host'
+      config:
+        type: AppSettings
+      resource: 
+        name: bffnsimplehostbotdotnet
+        group: 'DotNet'
+      project: 
+        directory: 'Bots/DotNet/Skills/CodeFirst/EchoSkillBot-2.1'
+        name: 'EchoSkillBot-2.1.csproj'
+        netCoreVersion: '2.1.x'
