@@ -1,0 +1,11 @@
+
+
+
+
+
+jobs:
+  - job:
+    steps:
+      - powershell: |
+          Write-Error "error:"
+        displayName: ShouldFail

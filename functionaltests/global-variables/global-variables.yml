@@ -1,3 +1,6 @@
+stages:
+  - 
+
 variables:
   scenarios:
     - id: SingleTurn
