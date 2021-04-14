@@ -8,4 +8,11 @@ jobs:
         ${{ if eq(variables['var-a'], '') }}:
           displayName: 1
         ${{ if ne(variables['var-a'], '') }}:
-          displayName: 2
+          displayName: $[variables['var-a']]
+
+      - powershell: |
+          Write-Error "error:"
+        ${{ if eq(variables['var-b'], '') }}:
+          displayName: 1
+        ${{ if ne(variables['var-b'], '') }}:
+          displayName: $[variables['var-b']]
