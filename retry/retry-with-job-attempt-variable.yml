@@ -13,6 +13,6 @@ jobs:
       - powershell: |
           Write-Error "error:"
         ${{ if eq(variables['var-b'], '') }}:
-          displayName: 1
+          displayName: $[variables['var-b']]
         ${{ if ne(variables['var-b'], '') }}:
           displayName: $[variables['var-b']]
