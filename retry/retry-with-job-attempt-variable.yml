@@ -1,11 +1,11 @@
 
 
-
-
-
 jobs:
   - job:
     steps:
       - powershell: |
           Write-Error "error:"
-        displayName: ShouldFail
+        ${{ if eq(variables['var-a'], '') }}:
+          displayName: 1
+        ${{ if ne(variables['var-a'], '') }}:
+          displayName: 2
