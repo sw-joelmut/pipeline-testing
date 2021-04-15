@@ -1,18 +1,19 @@
 
 
-jobs:
-  - job:
-    steps:
-      - powershell: |
-          Write-Error "error:"
-        ${{ if eq(variables['var-a'], '') }}:
-          displayName: 1
-        ${{ if ne(variables['var-a'], '') }}:
-          displayName: $[variables['var-a']]
 
-      - powershell: |
-          Write-Error "error:"
-        ${{ if eq(variables['var-b'], '') }}:
-          displayName: $[variables['var-b']]
-        ${{ if ne(variables['var-b'], '') }}:
-          displayName: $[variables['var-b']]
+stages:
+  - stage: 'A'
+    jobs:
+      - job: 'A'
+        steps:
+          - powershell: |
+              Write-Host "##vso[task.setvariable variable=A;isOutput=true]'A'"
+            name: 'A'
+
+  - stage: 'B'
+    jobs:
+      - job: 'B'
+        condition: $[ eq(stageDependencies.Download_Variables.Download_Variables.outputs['Set_Variables.DeploymentBuildSuffix'], 'A') ]
+        steps:
+          - powershell: |
+            name: 'B'
