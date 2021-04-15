@@ -2,7 +2,7 @@ parameters:
   name: ""
   
   
-- job: TestJob
+job: TestJob
   variables:
     Magic: ${{ parameters.name }}
   steps:
