@@ -6,4 +6,4 @@ jobs:
     variables:
       Magic: ${{ parameters.name }}
     steps:
-    - powershell: Write-Host "${{ parameters.name }}$(${{ parameters.name }})$(Magic)"
+    - powershell: Write-Host "${{ parameters.name }}$(Magic)"
