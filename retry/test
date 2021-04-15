@@ -1,9 +1,9 @@
 parameters:
   name: ""
   
-  
-job: TestJob
-  variables:
-    Magic: ${{ parameters.name }}
-  steps:
-  - powershell: Write-Host "${{ parameters.name }}$(Magic)"
+jobs:
+  - job: TestJob
+    variables:
+      Magic: ${{ parameters.name }}
+    steps:
+    - powershell: Write-Host "${{ parameters.name }}$(Magic)"
