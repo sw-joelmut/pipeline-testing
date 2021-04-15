@@ -11,12 +11,6 @@ stages:
 - stage: Test
   dependsOn: Build
   jobs:
-
-  - job: TestJob
-    variables:
-      Magic: $[stageDependencies.Build.BuildJob.outputs['BuildStep.StepVariable']]
-    steps:
-    - powershell: Write-Host "$(Magic)"
     - template: test
       parameters:
         name: $[stageDependencies.Build.BuildJob.outputs['BuildStep.StepVariable']]
