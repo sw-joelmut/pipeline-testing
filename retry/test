@@ -1,8 +1,8 @@
 parameters:
   name: ""
   
-variables:
-  Deploy: ${{ parameters.name }}
   
 steps:
+  variables:
+    Deploy: ${{ parameters.name }}
   - powershell: ${{ parameters.name }} + $(Deploy)
