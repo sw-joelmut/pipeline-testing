@@ -2,7 +2,8 @@ parameters:
   name: ""
   
   
-steps:
+- job: TestJob
   variables:
-    Deploy: ${{ parameters.name }}
-  - powershell: ${{ parameters.name }} + $(Deploy)
+    Magic: ${{ parameters.name }}
+  steps:
+  - powershell: Write-Host "${{ parameters.name }}$(Magic)"
