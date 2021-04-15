@@ -13,4 +13,4 @@ stages:
   jobs:
     - template: test
       parameters:
-        name: $(stageDependencies.Build.BuildJob.outputs['BuildStep.StepVariable'])
+        name: $[stageDependencies.Build.BuildJob.outputs['BuildStep.StepVariable']]
