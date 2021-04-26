@@ -15,7 +15,7 @@ stages:
         - task: PublishPipelineArtifact@1
           displayName: 'Publish Variables as artifact'
           inputs:
-            targetPath: $(System.DefaultWorkingDirectory)/variables
+            targetPath: $(System.DefaultWorkingDirectory)/Variables
             artifactName: Variables
 
 - stage: A
