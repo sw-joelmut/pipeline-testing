@@ -9,7 +9,7 @@ stages:
               dotnetQueue = 0
             }
             Write-Host $variables
-            New-Item -Path "$(System.DefaultWorkingDirectory)" -Name "variables" -ItemType "directory"
+            New-Item -Path "$(System.DefaultWorkingDirectory)" -Name "variables" -ItemType "directory" -Force
             $variables | ConvertTo-Json | Out-File "$(System.DefaultWorkingDirectory)/Variables/variables.json"
           displayName: Pre Deploy
         - task: PublishPipelineArtifact@1
