@@ -1,35 +1,41 @@
 stages:
 - stage: bffnsimplehostbotdotnet
+  dependsOn: []
   jobs: 
     - job:
       steps: 
         - powershell: echo "test"
 
 - stage: bffnsimplehostbotdotnet21
+  dependsOn: []
   jobs: 
     - job:
       steps: 
         - powershell: echo "test"
 
 - stage: bffnechoskillbotdotnet
+  dependsOn: []
   jobs: 
     - job:
       steps: 
         - powershell: echo "test"
 
 - stage: bffnechoskillbotdotnet21
+  dependsOn: []
   jobs: 
     - job:
       steps: 
         - powershell: echo "test"
 
 - stage: bffnechoskillbotdotnetv3
+  dependsOn: []
   jobs: 
     - job:
       steps: 
         - powershell: echo "test"
 
 - stage: bffnwaterfallhostbotdotnet
+  dependsOn: []
   jobs: 
     - job:
       steps: 
