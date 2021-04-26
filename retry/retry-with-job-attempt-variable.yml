@@ -42,12 +42,14 @@ stages:
         - powershell: echo "test"
 
 - stage: Deploy
-  dependsOn: 
+  dependsOn: [
     bffnsimplehostbotdotnet
     bffnsimplehostbotdotnet21
     bffnechoskillbotdotnet
     bffnechoskillbotdotnet21
     bffnechoskillbotdotnetv3
+    bffnwaterfallhostbotdotnet
+  ]
   jobs:
     - job: Test
       strategy:
@@ -58,5 +60,6 @@ stages:
           bffnechoskillbotdotnet: {}
           bffnechoskillbotdotnet21: {}
           bffnechoskillbotdotnetv3: {}
+          bffnwaterfallhostbotdotnet: {}
       steps: 
         - powershell: echo "test"
