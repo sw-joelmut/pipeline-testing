@@ -14,7 +14,7 @@ stages:
 
 - stage: B
   dependsOn: []
-  condition: $[stageDependencies.A.A.outputs['Set_Variables.queue']]
+  condition: eq(stageDependencies.A.A.outputs['Set_Variables.queue']],1)
   jobs:
     - job: 
       variables:
