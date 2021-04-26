@@ -47,7 +47,7 @@ stages:
 
               $json = Get-Content "./powershell/variables.json" | ConvertFrom-Json
 
-              if($json.dotnetQueue -lt 3) {
+              if($json.dotnetQueue -lt 1) {
                 "Checking"
                 Start-Sleep -s 1
                 write-host "$(queue)"
