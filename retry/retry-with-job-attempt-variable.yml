@@ -1,30 +1,59 @@
 stages:
-- stage: A
+- stage: Variables
   dependsOn: []
+  jobs:
+    - job: Prepare
+      steps:
+        - powershell: |
+            $variables = @{
+              deploymentBuildSuffix = "$(Build.BuildId)"
+            }
+            Write-Host $variables
+            New-Item -Path "$(System.DefaultWorkingDirectory)" -Name "variables" -ItemType "directory"
+            $variables | ConvertTo-Json | Out-File "$(System.DefaultWorkingDirectory)/Variables/variables.json"
+          displayName: Pre Deploy
+        - task: PublishPipelineArtifact@1
+          displayName: 'Publish Variables as artifact'
+          inputs:
+            targetPath: $(System.DefaultWorkingDirectory)/variables
+            artifactName: Variables
+
+- stage: A
+  dependsOn: [Prepare]
   jobs:
     - job: A
       steps:
-        - powershell: |
-            Start-Sleep -s 5
-            Write-Host "##vso[task.setvariable variable=queue;isOutput=true]1"
-          displayName: Pre Deploy
+        - task: AzureCLI@2
+          inputs:
+            azureSubscription: 'j-arguello'
+            scriptType: pscore
+            scriptLocation: inlineScript
+            inlineScript: |
+              Start-Sleep -s 5
+              Write-Host "##vso[task.setvariable variable=queue;isOutput=true]1"
+
         - powershell: |
             Write-Host "Deploy"
           displayName: Deploy
 
 - stage: B
-  dependsOn: []
+  dependsOn: [Prepare]
   jobs:
     - job: 
-      variables:
-        queue: $[stageDependencies.A.A.outputs['Set_Variables.queue']]
       steps:
         - powershell: |
             while($true) { 
-              "Checking"
-              Start-Sleep -s 1
-              write-host "$(queue)"
-              if("$(queue)" -eq 0){
+              az pipelines runs artifact download --run-id $(Build.BuildId) --detect true --artifact-name "Variables" --path "./powershell"
+
+              $json = Get-Content "./powershell/variables.json" | ConvertFrom-Json
+
+              if($json.dotnetQueue -lt 3) {
+                "Checking"
+                Start-Sleep -s 1
+                write-host "$(queue)"
+              } else {
+                $json.dotnetQueue = $json.dotnetQueue + 1
+                az pipelines runs artifact upload --run-id $(Build.BuildId) --detect true --artifact-name "Variables" --path "./powershell"
                 Break
               }
             }
