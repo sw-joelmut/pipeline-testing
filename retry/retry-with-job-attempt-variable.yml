@@ -25,7 +25,7 @@ stages:
       steps:
         - task: AzureCLI@2
           inputs:
-            azureSubscription: 'j-arguello'
+            azureSubscription: $(AzureSubscription)
             scriptType: pscore
             scriptLocation: inlineScript
             inlineScript: |
@@ -59,7 +59,7 @@ stages:
       steps:
         - task: AzureCLI@2
           inputs:
-            azureSubscription: 'j-arguello'
+            azureSubscription: $(AzureSubscription)
             scriptType: pscore
             scriptLocation: inlineScript
             inlineScript: |
