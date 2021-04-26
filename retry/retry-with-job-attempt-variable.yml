@@ -43,11 +43,11 @@ stages:
 
 - stage: Deploy
   dependsOn: [
-    bffnsimplehostbotdotnet
-    bffnsimplehostbotdotnet21
-    bffnechoskillbotdotnet
-    bffnechoskillbotdotnet21
-    bffnechoskillbotdotnetv3
+    bffnsimplehostbotdotnet,
+    bffnsimplehostbotdotnet21,
+    bffnechoskillbotdotnet,
+    bffnechoskillbotdotnet21,
+    bffnechoskillbotdotnetv3,
     bffnwaterfallhostbotdotnet
   ]
   jobs:
