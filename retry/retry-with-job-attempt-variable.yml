@@ -1,92 +1,56 @@
 stages:
-- stage: Variables
-  dependsOn: []
+- stage: bffnsimplehostbotdotnet
+  jobs: 
+    - job:
+      steps: 
+        - powershell: echo "test"
+
+- stage: bffnsimplehostbotdotnet21
+  jobs: 
+    - job:
+      steps: 
+        - powershell: echo "test"
+
+- stage: bffnechoskillbotdotnet
+  jobs: 
+    - job:
+      steps: 
+        - powershell: echo "test"
+
+- stage: bffnechoskillbotdotnet21
+  jobs: 
+    - job:
+      steps: 
+        - powershell: echo "test"
+
+- stage: bffnechoskillbotdotnetv3
+  jobs: 
+    - job:
+      steps: 
+        - powershell: echo "test"
+
+- stage: bffnwaterfallhostbotdotnet
+  jobs: 
+    - job:
+      steps: 
+        - powershell: echo "test"
+
+- stage: Deploy
+  dependsOn: 
+    bffnsimplehostbotdotnet
+    bffnsimplehostbotdotnet21
+    bffnechoskillbotdotnet
+    bffnechoskillbotdotnet21
+    bffnechoskillbotdotnetv3
   jobs:
-    - job: Prepare
-      steps:
-        - powershell: |
-            $variables = @{
-              dotnetQueue = 0
-            }
-            Write-Host $variables
-            New-Item -Path "$(System.DefaultWorkingDirectory)" -Name "Variables" -ItemType "directory" -Force
-            $variables | ConvertTo-Json | Out-File "$(System.DefaultWorkingDirectory)/Variables/variables.json"
-          displayName: Pre Deploy
-        - task: PublishPipelineArtifact@1
-          displayName: 'Publish Variables as artifact'
-          inputs:
-            targetPath: $(System.DefaultWorkingDirectory)/Variables
-            artifactName: Variables
-
-- stage: A
-  dependsOn: [Variables]
-  jobs:
-    - job: 
-      steps:
-        - task: AzureCLI@2
-          inputs:
-            azureSubscription: $(AzureSubscription)
-            scriptType: pscore
-            scriptLocation: inlineScript
-            inlineScript: |
-              "$(System.CollectionUri)"
-              "$(System.teamProject)"
-
-              while($true) { 
-                # az pipelines runs artifact download --run-id $(Build.BuildId) --organization "$(System.CollectionUri)" --project "$(System.teamProject)" --artifact-name "Variables" --path "./powershell"
-                az pipelines runs artifact download --run-id 716 --organization "https://dev.azure.com/joelmut1333" --project "functional-tests" --artifact-name "Variables" --path "./powershell/"
-
-                $json = Get-Content "./powershell/variables.json" | ConvertFrom-Json
-
-                if($json.dotnetQueue -lt 1) {
-                  "Checking"
-                  Start-Sleep -s 1
-                  write-host "$(queue)"
-                } else {
-                  $json.dotnetQueue = $json.dotnetQueue + 1
-                  az pipelines runs artifact upload --run-id $(Build.BuildId) --organization "$(System.CollectionUri)" --project "$(System.teamProject)" --artifact-name "Variables" --path "./powershell"
-                  Break
-                }
-              }
-              Write-Host "test"
-        - powershell: |
-            Write-Host "Deploy"
-          displayName: Deploy
-
-- stage: B
-  dependsOn: [Variables]
-  jobs:
-    - job: 
-      steps:
-        - task: AzureCLI@2
-          inputs:
-            azureSubscription: $(AzureSubscription)
-            scriptType: pscore
-            scriptLocation: inlineScript
-            inlineScript: |
-              "$(System.CollectionUri)"
-              "$(System.teamProject)"
-
-              while($true) { 
-                # az pipelines runs artifact download --run-id $(Build.BuildId) --organization "$(System.CollectionUri)" --project "$(System.teamProject)" --artifact-name "Variables" --path "./powershell"
-                az pipelines runs artifact download --run-id 716 --organization "https://dev.azure.com/joelmut1333" --project "functional-tests" --artifact-name "Variables" --path "./powershell/"
-
-                $json = Get-Content "./powershell/variables.json" | ConvertFrom-Json
-
-                if($json.dotnetQueue -lt 1) {
-                  "Checking"
-                  Start-Sleep -s 1
-                  write-host "$(queue)"
-                } else {
-                  $json.dotnetQueue = $json.dotnetQueue + 1
-                  az pipelines runs artifact upload --run-id $(Build.BuildId) --organization "$(System.CollectionUri)" --project "$(System.teamProject)" --artifact-name "Variables" --path "./powershell"
-                  Break
-                }
-              }
-              Write-Host "test"
-        - powershell: |
-            Write-Host "Deploy"
-          displayName: Deploy
-
-variables:
-  counter: 0
+    - job: Test
+      strategy:
+        maxParallel: 3
+        matrix:
+          bffnsimplehostbotdotnet: {}
+          bffnsimplehostbotdotnet21: {}
+          bffnechoskillbotdotnet: {}
+          bffnechoskillbotdotnet21: {}
+          bffnechoskillbotdotnetv3: {}
+      steps: 
+        - powershell: echo "test"
