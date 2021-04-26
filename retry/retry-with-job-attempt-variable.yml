@@ -20,10 +20,14 @@ stages:
         queue: $[stageDependencies.A.A.outputs['Set_Variables.queue']]
       steps:
         - powershell: |
-            do { 
+            while($true) { 
               "Checking"
               Start-Sleep -s 1
-            } while ($(queue) -eq 0)
+              write-host "$(queue)"
+              if("$(queue)" -eq 0){
+                Break
+              }
+            }
             Write-Host "test"
           displayName: Pre Deploy
         - powershell: |
