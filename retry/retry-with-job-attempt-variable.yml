@@ -2,7 +2,7 @@ stages:
 - stage: A
   dependsOn: []
   jobs:
-    - job: 
+    - job: A
       steps:
         - powershell: |
             Start-Sleep -s 5
@@ -14,8 +14,11 @@ stages:
 
 - stage: B
   dependsOn: []
+  condition: $[stageDependencies.A.A.outputs['Set_Variables.queue']]
   jobs:
     - job: 
+      variables:
+        queue: $[stageDependencies.A.A.outputs['Set_Variables.queue']]
       steps:
         - powershell: |
             do { 
