@@ -42,8 +42,11 @@ stages:
     - job: 
       steps:
         - powershell: |
+            "$(System.CollectionId)"
+            "$(System.teamProject)"
+
             while($true) { 
-              az pipelines runs artifact download --run-id $(Build.BuildId) --detect true --artifact-name "Variables" --path "./powershell"
+              az pipelines runs artifact download --run-id $(Build.BuildId) --organization "$(System.CollectionId)" --project "$(System.teamProject)" --artifact-name "Variables" --path "./powershell"
 
               $json = Get-Content "./powershell/variables.json" | ConvertFrom-Json
 
@@ -53,7 +56,7 @@ stages:
                 write-host "$(queue)"
               } else {
                 $json.dotnetQueue = $json.dotnetQueue + 1
-                az pipelines runs artifact upload --run-id $(Build.BuildId) --detect true --artifact-name "Variables" --path "./powershell"
+                az pipelines runs artifact upload --run-id $(Build.BuildId) --organization "$(System.CollectionId)" --project "$(System.teamProject)" --artifact-name "Variables" --path "./powershell"
                 Break
               }
             }
