@@ -5,18 +5,28 @@ stages:
     - job: 
       steps:
         - powershell: |
+            Start-Sleep -s 5
             Write-Host "##vso[task.setvariable variable=StepVariable;isOutput=true]1"
-          displayName: A
+          displayName: Pre Deploy
+        - powershell: |
+            Write-Host "Deploy"
+          displayName: Deploy
 
 - stage: B
   dependsOn: []
-  condition: eq(variables.counter, 1)
   jobs:
     - job: 
       steps:
         - powershell: |
+            do { 
+              "Checking"
+              Start-Sleep -s 1
+            } while ($(counter) -eq 0)
             Write-Host "test"
-          displayName: B
+          displayName: Pre Deploy
+        - powershell: |
+            Write-Host "Deploy"
+          displayName: Deploy
 
 variables:
   counter: 0
