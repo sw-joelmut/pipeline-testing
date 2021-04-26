@@ -6,7 +6,7 @@ stages:
       steps:
         - powershell: |
             $variables = @{
-              deploymentBuildSuffix = "$(Build.BuildId)"
+              dotnetQueue = 0
             }
             Write-Host $variables
             New-Item -Path "$(System.DefaultWorkingDirectory)" -Name "variables" -ItemType "directory"
