@@ -1,5 +1,6 @@
 stages:
 - stage: A
+  dependsOn: []
   jobs:
     - job: 
       steps:
@@ -8,6 +9,7 @@ stages:
           displayName: A
 
 - stage: B
+  dependsOn: []
   condition: eq(variables.counter, 1)
   jobs:
     - job: 
