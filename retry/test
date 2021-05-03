@@ -4,12 +4,11 @@ jobs:
       - task: sw-joelmut.retry-task-poc.retry-task-poc.retry-task-poc@0
         displayName: RetryTaskPOC
         inputs:
-          task: 'Powershell@2'
+          task: 'D:/a/_tasks/PowerShell_e213ff0f-5d5c-4791-802d-52ea3e7be1f1/2.186.0/powershell.js'
           displayName: Testing
           inputs: |
             targetType: inline
-            workingDirectory: '$(SYSTEM.DEFAULTWORKINGDIRECTORY)/test'
+            workingDirectory: '$(SYSTEM.DEFAULTWORKINGDIRECTORY)'
             failOnStderr: true
-            script: |
-              Write-Host "Hello";
+            script: Write-Host "Hello";
 
