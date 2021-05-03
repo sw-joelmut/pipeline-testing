@@ -8,7 +8,7 @@ jobs:
           displayName: Testing
           inputs: |
             targetType: inline
-            workingDirectory: '$(SYSTEM.DEFAULTWORKINGDIRECTORY)/${{ bot.project.directory }}'
+            workingDirectory: '$(SYSTEM.DEFAULTWORKINGDIRECTORY)/test'
             failOnStderr: true
             script: |
               Write-Host "Hello";
