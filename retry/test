@@ -14,4 +14,9 @@ jobs:
             workingDirectory: '$(SYSTEM.DEFAULTWORKINGDIRECTORY)'
             failOnStderr: true
             script: Write-Host "Hello";
-
+      - powershell: |
+          cd ../../..
+          ls -R
+        displayName: "Dir workspace"
+        continueOnError: true
+        condition: succeededOrFailed()
