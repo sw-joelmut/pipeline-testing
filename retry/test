@@ -1,9 +1,15 @@
-parameters:
-  name: ""
-  
 jobs:
-  - job: TestJob
-    variables:
-      Magic: ${{ parameters.name }}
+  - job: TestRetry
     steps:
-    - powershell: Write-Host "${{ parameters.name }}$(Magic)"
+      - task: sw-joelmut.retry-task-poc.retry-task-poc.retry-task-poc@0
+        displayName: RetryTaskPOC
+        inputs:
+          task: 'Powershell@2'
+          displayName: Testing
+          inputs: |
+            targetType: inline
+            workingDirectory: '$(SYSTEM.DEFAULTWORKINGDIRECTORY)/${{ bot.project.directory }}'
+            failOnStderr: true
+            script: |
+              Write-Host "Hello";
+
